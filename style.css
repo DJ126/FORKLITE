@@ -15,7 +15,7 @@ body {
     background-position: center;
 }
 
-#start-screen, #how-to-play-screen, #game-container {
+#start-screen, #how-to-play-screen, #level-select-screen, #game-container {
     text-align: center;
     position: absolute;
     width: 100%;
@@ -23,7 +23,7 @@ body {
     box-sizing: border-box;
 }
 
-#start-screen h1 {
+#start-screen h1, #level-select-screen h1, #how-to-play-screen h1 {
     font-size: 3em;
     text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc, 0 0 50px #00ffcc;
     -webkit-text-stroke: 2px #00ffcc;
@@ -31,7 +31,7 @@ body {
     margin: 20px 0;
 }
 
-#start-screen button {
+button {
     display: block;
     width: 80%;
     max-width: 300px;
@@ -47,7 +47,7 @@ body {
     transition: background 0.5s, box-shadow 0.5s;
 }
 
-#start-screen button:hover {
+button:hover {
     background: linear-gradient(45deg, #0066ff, #00ffcc);
     box-shadow: 0 0 20px #00ffcc, 0 0 30px #0066ff;
 }
@@ -94,4 +94,18 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: inline-block;
+}
+
+.enemy-health-container {
+    position: absolute;
+    width: 100px;
+    height: 10px;
+    border: 1px solid #000;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.enemy-health-bar {
+    width: 100%;
+    height: 100%;
+    background-color: red;
 }

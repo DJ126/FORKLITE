@@ -35,8 +35,12 @@ function showStartScreen() {
 function init() {
     // Scene and Camera
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x87ceeb);
+    const textureLoader = new THREE.TextureLoader();
+    const starryTexture = textureLoader.load('https://images.pexels.com/photos/956981/milky-way-starry-sky-night-sky-star-956981.jpeg?auto=compress&cs=tinysrgb&w=600');
+    scene.background = starryTexture;
+
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.set(0, 10, 0); // Set camera height for first-person view
 
     // Renderer
     renderer = new THREE.WebGLRenderer();
@@ -57,10 +61,25 @@ function init() {
     floor.rotation.x = -Math.PI / 2;
     scene.add(floor);
 
-    // Walls
-    createWall(0, 5, -50, 100, 10, 10);
-    createWall(-50, 5, 0, 10, 10, 100);
-    createWall(50, 5, 0, 10, 10, 100);
+    // Enclosed Box
+    const boxGeometry = new THREE.BoxGeometry(200, 100, 200);
+    const boxMaterial = new THREE.MeshBasicMaterial({ map: starryTexture, side: THREE.BackSide });
+    const box = new THREE.Mesh(boxGeometry, boxMaterial);
+    box.position.y = 50;
+    scene.add(box);
+
+    // Barriers (Walls)
+    createWall(100, 50, 0, 1, 100, 200); // Right wall
+    createWall(-100, 50, 0, 1, 100, 200); // Left wall
+    createWall(0, 50, 100, 200, 100, 1); // Front wall
+    createWall(0, 50, -100, 200, 100, 1); // Back wall
+
+    // Cover Objects
+    createCover(0, 5, -30, 10, 10, 10);
+    createCover(20, 5, -40, 10, 10, 10);
+    createCover(-20, 5, -40, 10, 10, 10);
+    createCover(40, 5, 20, 10, 10, 10);
+    createCover(-40, 5, 20, 10, 10, 10);
 
     // NPCs
     loadNPCModel(0, 1, -30);
@@ -102,7 +121,16 @@ function createWall(x, y, z, width, height, depth) {
     const wall = new THREE.Mesh(geometry, material);
     wall.position.set(x, y, z);
     scene.add(wall);
-    objects.push(wall);
+    objects.push(wall); // Add wall to objects array for collision detection
+}
+
+function createCover(x, y, z, width, height, depth) {
+    const geometry = new THREE.BoxGeometry(width, height, depth);
+    const material = new THREE.MeshBasicMaterial({color: 0xFF5733, wireframe: true});
+    const cover = new THREE.Mesh(geometry, material);
+    cover.position.set(x, y, z);
+    scene.add(cover);
+    objects.push(cover); // Add cover to objects array for collision detection
 }
 
 function loadNPCModel(x, y, z) {
@@ -123,7 +151,7 @@ function onKeyDown(event) {
             break;
         case 'ArrowLeft':
         case 'KeyA':
-            moveRight = true;
+            moveLeft = true;
             break;
         case 'ArrowDown':
         case 'KeyS':
@@ -131,7 +159,7 @@ function onKeyDown(event) {
             break;
         case 'ArrowRight':
         case 'KeyD':
-            moveLeft = true;
+            moveRight = true;
             break;
         case 'Space':
             if (canJump === true) velocity.y += 350;
@@ -157,7 +185,7 @@ function onKeyUp(event) {
             break;
         case 'ArrowLeft':
         case 'KeyA':
-            moveRight = false;
+            moveLeft = false;
             break;
         case 'ArrowDown':
         case 'KeyS':
@@ -165,7 +193,7 @@ function onKeyUp(event) {
             break;
         case 'ArrowRight':
         case 'KeyD':
-            moveLeft = false;
+            moveRight = false;
             break;
     }
 }
