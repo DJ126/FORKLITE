@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORKLITE - 3D FPS Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="start-screen">
+        <h1>FORKLITE</h1>
+        <button id="start-button">Start</button>
+        <button id="how-to-play-button">How to Play</button>
+    </div>
+    <div id="how-to-play-screen" style="display: none;">
+        <div class="how-to-play-box">
+            <h1>How to Play</h1>
+            <p>Use WASD to move and Space to jump. Click to lock the pointer and shoot the enemies.</p>
+            <p>Press 1 for AR, 2 for Shotgun, 3 for Sniper.</p>
+            <button id="back-button">Back</button>
+        </div>
+    </div>
+    <div id="game-container" style="display: none;">
+        <div id="hud">
+            <div id="score">Score: 0</div>
+        </div>
+        <div id="minimap-container">
+            <canvas id="minimap"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/PointerLockControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
